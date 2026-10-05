@@ -1,0 +1,565 @@
+local aa
+local function tryOperation9()
+    loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/download/1.6.64-fix/main.lua"))
+    aa = nil
+    return nil
+end
+local function tryOperation10()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/main.lua"))
+    aa = nil
+    return nil
+end
+local ab, ac
+local function getPlayers()
+    a = ab:GetPlayers() -- This is fixed
+    local b = ipairs(a)
+    local pack = table.pack(b(a, 0))
+    local c = table.unpack(pack, 1, pack.n)
+    local d = {}
+    local e
+    if not (c == nil) then
+        e = c
+        while true do
+            if pack[2] ~= ac then
+                table.insert(d, pack[2].Name)
+                pack = table.pack(b(a, e))
+                c = table.unpack(pack, 1, pack.n)
+                if not (c == nil) then
+                    e = c
+                    continue
+                end
+            else
+                pack = table.pack(b(a, e))
+                c = table.unpack(pack, 1, pack.n)
+                if c == nil then
+                    break
+                else
+                    e = c
+                    continue
+                end
+            end
+            table.sort(d)
+            table.insert(d, 1, "Auto")
+            return d
+        end
+    end
+    table.sort(d)
+    table.insert(d, 1, "Auto")
+    return d
+end
+local function processItems(a)
+    local b, c, d, e, character, humanoidRootPart, humanoid, f
+    if not (a == "Auto" or not a) then
+        c = ab:GetPlayers() -- Change this from 'ab:GetPlayers()'
+        b = ipairs(c)
+        f = table.pack(b(c, 0))
+        e = table.unpack(f, 1, f.n)
+        if not (e == nil) then
+            d = e
+            while true do
+                if not (f[2] ~= ac and f[2].Name == a) then
+                    f = table.pack(b(c, d))
+                    e = table.unpack(f, 1, f.n)
+                    if e ~= nil then
+                        d = e
+                        continue
+                    end
+                    break
+                end
+                character = table.unpack(f, 2, f.n).Character
+                if not character then
+                    f = table.pack(b(c, d))
+                    e = table.unpack(f, 1, f.n)
+                    if e ~= nil then
+                        d = e
+                        continue
+                    end
+                    break
+                end
+                humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+                humanoid = character:FindFirstChild("Humanoid")
+                if not (humanoidRootPart and humanoid and 0 < humanoid.Health) then
+                    f = table.pack(b(c, d))
+                    e = table.unpack(f, 1, f.n)
+                    if e ~= nil then
+                        d = e
+                        continue
+                    end
+                    break
+                end
+                return humanoidRootPart
+            end
+        end
+    end
+    return nil
+end
+local ad, ae, af
+local function getValue2()
+    ad = af()
+    ae = 1700000000.0333333
+    return 1700000000.0333333
+end
+local ag
+local function runProtected2()
+    local a
+    local function tryOperation8()
+        a = ag.Network.ServerStatsItem["Data Ping"]:GetValue()
+    end
+    pcall(tryOperation8)
+    local clamp = math.clamp(-3, 0, 4)
+    local b = {}
+    b.pingSec = math.clamp(0, 0, 0.22)
+    b.clickDelay = 0.17 * math.max(1 - clamp * 0.18, 0.25)
+    b.predictMult = 1 + clamp * 0.18
+    b.orbitForce = 2.5 + clamp * 0.15
+    b.sideBoost = 0.1 + clamp * 0.04
+    return b
+end
+local ah
+local function runProtected3()
+    local function tryOperation7()
+        ah.MouseBehavior = Enum.MouseBehavior.Default
+    end
+    pcall(tryOperation7)
+end
+local function checkCondition2(a)
+    if not a then
+        return true
+    elseif a:GetState() == Enum.HumanoidStateType.Ragdoll then
+        return true
+    elseif a.Health <= 0 then
+        return true
+    elseif a.PlatformStand then
+        return true
+    else
+        return false
+    end
+end
+local ai
+local function processItems2(a, b)
+    if not ai[a] then
+        ai[a] = {}
+    end
+    local c = ai[a]
+    table.insert(c, {
+        vel = b,
+        t = 1700000000.0333333,
+    })
+    while true do
+        if 10 < #c then
+            table.remove(c, 1)
+            continue
+        end
+        break
+    end
+    return a, b, c
+end
+local function transformValue(a)
+    local b = ai[a]
+    local c, d, e, f, t, g, h
+    if not b or #b < 2 then
+        return Vector3.zero
+    else
+        c = b[#b]
+        d = b[1]
+        t = d.t
+        e = c.t - t
+        if e < 0.001 then
+            return Vector3.zero
+        else
+            g = d.vel
+            f = c.vel - g
+            g = f.X / e
+            h = f.Z / e
+            return Vector3.new(g, 0, h)
+        end
+    end
+end
+local function checkCondition3(a)
+    local b = ai[a]
+    local vector3, c, x, z, z2
+    if not b or #b < 2 then
+        return false
+    else
+        c = b[#b - 1].vel.X
+        z = b[#b - 1].vel.Z
+        vector3 = Vector3.new(c, 0, z)
+        x = b[#b].vel.X
+        z2 = b[#b].vel.Z
+        c = Vector3.new(x, 0, z2)
+        if vector3.Magnitude < 1 or c.Magnitude < 1 then
+            return false
+        else
+            return vector3.Unit:Dot(c.Unit) < 0.55
+        end
+    end
+end
+local function checkCondition4(a)
+    local b = ai[a]
+    local vel, vel2, magnitude, magnitude2, x2, x3, z3, z4
+    if not b or #b < 3 then
+        return false
+    else
+        vel = b[#b - 2].vel
+        vel2 = b[#b].vel
+        x2 = vel.X
+        z3 = vel.Z
+        magnitude = Vector3.new(x2, 0, z3).Magnitude
+        x3 = vel2.X
+        z4 = vel2.Z
+        magnitude2 = Vector3.new(x3, 0, z4).Magnitude
+        if magnitude < 1 then
+            return false
+        else
+            return magnitude2 / magnitude < 0.35
+        end
+    end
+end
+local function checkCondition5(a, b)
+    local c = ai[a]
+    local d, vector32, e, z5
+    if not c or #c < 1 then
+        return false
+    else
+        e = b.Position
+        d = a.Position - e
+        e = d.X
+        z5 = d.Z
+        vector32 = Vector3.new(e, 0, z5)
+        if vector32.Magnitude < 0.1 then
+            return false
+        else
+            e = c[#c].vel
+            if e.Magnitude < 2 then
+                return false
+            else
+                return 0.45 < vector32.Unit:Dot(e.Unit)
+            end
+        end
+    end
+end
+local function checkCondition6(a, b)
+    local c = ai[a]
+    local d, vector33, e, f
+    if not c or #c < 1 then
+        return false
+    else
+        e = b.Position
+        d = a.Position - e
+        e = d.X
+        f = d.Z
+        vector33 = Vector3.new(e, 0, f)
+        if vector33.Magnitude < 0.1 then
+            return false
+        else
+            e = c[#c].vel
+            if e.Magnitude < 3 then
+                return false
+            else
+                f = vector33.Unit
+                return math.abs(f:Dot(e.Unit)) < 0.35
+            end
+        end
+    end
+end
+local aj, ak, al, am, an, ao
+local function computeValue(a, b, c)
+    local assemblyLinearVelocity = a.AssemblyLinearVelocity
+    local x4 = assemblyLinearVelocity.X
+    local z6 = assemblyLinearVelocity.Z
+    local vector34 = Vector3.new(x4, 0, z6)
+    aj(a, vector34)
+    x4 = ak(a)
+    local d = al(a)
+    z6 = am(a)
+    local e = c
+    if c then
+        e = an(a, c)
+    end
+    local f = c
+    if c then
+        f = ao(a, c)
+    end
+    local g = b
+    if d then
+        g = g * 1.55
+    end
+    if z6 then
+        g = g * 0.6
+    end
+    if e then
+        g = g * 1.4
+    end
+    local h = a.Position + vector34 * g + x4 * (0.085 * g * g)
+    if vector34.Magnitude < 2 then
+        h = h:Lerp(a.Position, 0.7)
+    end
+    local x5 = h.X
+    local y = a.Position.Y
+    local z7 = h.Z
+    return Vector3.new(x5, y, z7), d, f, e
+end
+local ap, aq
+local function processItems3()
+    local character2 = ac.Character
+    local humanoidRootPart2, a, b, c, pingSec, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s
+    if character2 then
+        humanoidRootPart2 = character2:FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart2 then
+            a = nil
+            b = 50
+            c = ap()
+            pingSec = c.pingSec
+            e = ab:GetPlayers()
+            d = next
+            g = next(e)
+            if g == nil then
+                if workspace:FindFirstChild("Live") then
+                    f = "Weakest Dummy"
+                    d = workspace.Live:FindFirstChild("Weakest Dummy")
+                    e = d
+                    if e then
+                        g = "HumanoidRootPart"
+                        goto __x1
+                    else
+                        return nil
+                    end
+                end
+            else
+                f = g
+                j = ac
+                h = e
+                i = h ~= j
+                if i then
+                    h = select(2, next(e, nil))
+                    i = h.Character
+                end
+                if i then
+                    i = select(2, next(e, nil)).Character:FindFirstChild("HumanoidRootPart")
+                    h = select(2, next(e, nil))
+                    l = "Humanoid"
+                    j = h.Character:FindFirstChild("Humanoid")
+                    k = i and j
+                    if k then
+                        l = j.Health
+                        m = 0
+                        k = 0 < l
+                    end
+                    if k then
+                        k = aq
+                        l = i
+                        p = 0.155
+                        q = c.predictMult
+                        o = 0.05
+                        m = 0.155 * q + pingSec + 0.05
+                        n = humanoidRootPart2
+                        s = table.pack(aq(i, m, humanoidRootPart2))
+                        local __cont3 = false
+                        while true do
+                            o = Vector3.new
+                            p = s[1].X
+                            k = table.unpack(s, 1, s.n)
+                            o = o(p, 0, k.Z)
+                            q = humanoidRootPart2.Position.X
+                            r = humanoidRootPart2.Position.Z
+                            p = Vector3.new(q, 0, r)
+                            n = o - p
+                            m = n.Magnitude
+                            if m < b then
+                                b = m
+                                a = i
+                            end
+                            s = table.pack(d(e, f))
+                            g = table.unpack(s, 1, s.n)
+                            if not (g == nil) then
+                                f = g
+                                while true do
+                                    j = ac
+                                    h = table.unpack(s, 2, s.n)
+                                    i = h ~= j
+                                    if i then
+                                        h = table.unpack(s, 2, s.n)
+                                        i = h.Character
+                                    end
+                                    if i then
+                                        i = table.unpack(s, 2, s.n).Character:FindFirstChild("HumanoidRootPart")
+                                        h = table.unpack(s, 2, s.n)
+                                        l = "Humanoid"
+                                        j = h.Character:FindFirstChild("Humanoid")
+                                        k = i and j
+                                        if k then
+                                            l = j.Health
+                                            m = 0
+                                            k = 0 < l
+                                        end
+                                        if k then
+                                            k = aq
+                                            l = i
+                                            p = 0.155
+                                            q = c.predictMult
+                                            o = 0.05
+                                            m = 0.155 * q + pingSec + 0.05
+                                            n = humanoidRootPart2
+                                            s = table.pack(aq(i, m, humanoidRootPart2))
+                                            __cont3 = true
+                                            break
+                                        else
+                                            s = table.pack(d(e, f))
+                                            g = table.unpack(s, 1, s.n)
+                                            if g == nil then
+                                                break
+                                            else
+                                                f = g
+                                            end
+                                        end
+                                    else
+                                        s = table.pack(d(e, f))
+                                        g = table.unpack(s, 1, s.n)
+                                        if g == nil then
+                                            break
+                                        else
+                                            f = g
+                                        end
+                                    end
+                                end
+                                if __cont3 then
+                                    __cont3 = false
+                                    continue
+                                end
+                                break
+                            end
+                            break
+                        end
+                    else
+                        s = table.pack(d(e, f))
+                        f = table.unpack(s, 1, s.n)
+                        while true do
+                            j = ac
+                            h = table.unpack(s, 2, s.n)
+                            i = h ~= j
+                            if i then
+                                h = table.unpack(s, 2, s.n)
+                                i = h.Character
+                            end
+                            if i then
+                                i = table.unpack(s, 2, s.n).Character:FindFirstChild("HumanoidRootPart")
+                                h = table.unpack(s, 2, s.n)
+                                l = "Humanoid"
+                                j = h.Character:FindFirstChild("Humanoid")
+                                k = i and j
+                                if k then
+                                    l = j.Health
+                                    m = 0
+                                    k = 0 < l
+                                end
+                                if k then
+                                    l = i
+                                    m = 0.155 * c.predictMult + pingSec + 0.05
+                                    s = table.pack(aq(i, m, humanoidRootPart2))
+                                    o = Vector3.new
+                                    p = table.unpack(s, 1, s.n).X
+                                    k = table.unpack(s, 1, s.n)
+                                    o = o(p, 0, k.Z)
+                                    q = humanoidRootPart2.Position.X
+                                    r = humanoidRootPart2.Position.Z
+                                    p = Vector3.new(q, 0, r)
+                                    n = o - p
+                                    m = n.Magnitude
+                                    if m < b then
+                                        b = m
+                                        a = i
+                                    end
+                                    s = table.pack(d(e, f))
+                                    g = table.unpack(s, 1, s.n)
+                                    if not (g == nil) then
+                                        f = g
+                                        continue
+                                    end
+                                else
+                                    s = table.pack(d(e, f))
+                                    g = table.unpack(s, 1, s.n)
+                                    if g == nil then
+                                        break
+                                    else
+                                        f = g
+                                        continue
+                                    end
+                                end
+                            else
+                                s = table.pack(d(e, f))
+                                g = table.unpack(s, 1, s.n)
+                                if g == nil then
+                                    break
+                                else
+                                    f = g
+                                    continue
+                                end
+                            end
+                            break
+                        end
+                    end
+                else
+                    s = table.pack(d(e, f))
+                    f = table.unpack(s, 1, s.n)
+                    while true do
+                        j = ac
+                        h = table.unpack(s, 2, s.n)
+                        i = h ~= j
+                        if i then
+                            h = table.unpack(s, 2, s.n)
+                            i = h.Character
+                        end
+                        if i then
+                            i = table.unpack(s, 2, s.n).Character:FindFirstChild("HumanoidRootPart")
+                            h = table.unpack(s, 2, s.n)
+                            l = "Humanoid"
+                            j = h.Character:FindFirstChild("Humanoid")
+                            k = i and j
+                            if k then
+                                l = j.Health
+                                m = 0
+                                k = 0 < l
+                            end
+                            if k then
+                                l = i
+                                m = 0.155 * c.predictMult + pingSec + 0.05
+                                s = table.pack(aq(i, m, humanoidRootPart2))
+                                o = Vector3.new
+                                p = table.unpack(s, 1, s.n).X
+                                k = table.unpack(s, 1, s.n)
+                                o = o(p, 0, k.Z)
+                                q = humanoidRootPart2.Position.X
+                                r = humanoidRootPart2.Position.Z
+                                p = Vector3.new(q, 0, r)
+                                n = o - p
+                                m = n.Magnitude
+                                if m < b then
+                                    b = m
+                                    a = i
+                                end
+                                s = table.pack(d(e, f))
+                                g = table.unpack(s, 1, s.n)
+                                if not (g == nil) then
+                                    f = g
+                                    continue
+                                end
+                            else
+                                s = table.pack(d(e, f))
+                                g = table.unpack(s, 1, s.n)
+                                if g == nil then
+                                    break
+                                else
+                                    f = g
+                                    continue
+                                end
+                            end
+                        else
+                            s = table.pack(d(e, f))
+                            g = table.unpack(s, 1, s.n)
+                            if g == nil then
+                                break
+                            else
+                                f = g
+                                continue
+                            end
+ 
